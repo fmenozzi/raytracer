@@ -10,7 +10,7 @@ struct Sphere {
 
     Sphere(const Vector3& _center, float _radius) : center(_center), radius(_radius) {}
 
-    float intersect(const Ray& ray);
+    bool intersects(const Ray& ray);
 };
 
 #endif

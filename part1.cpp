@@ -14,28 +14,27 @@ int main() {
     constexpr float b = -0.1f;
     constexpr float t =  0.1f;
 
-    constexpr float d = 0.1f;
+    constexpr float dist = 0.1f;
 
-    Vector3 e_(0,0,0);
-    Vector3 u_(1,0,0);
-    Vector3 v_(0,1,0);
-    Vector3 w_(0,0,1);
-
-    Sphere s(Vector3(-4, 0, -7), 1);
+    Sphere s1(Vector3(-4, 0, -7), 1);
+    Sphere s2(Vector3( 0, 0, -7), 2);
+    Sphere s3(Vector3( 4, 0, -7), 1);
 
     Pixel buffer[NX][NY];
+
+    // Fill pixel buffer
     for (int i = 0; i < NX; i++) {
         for (int j = 0; j < NY; j++) {
-            float u = l + (r-l)*(i+0.5f)/NX;
-            float v = b + (t-b)*(j+0.5f)/NY;
+            float u = l + ((r-l)*(i+0.5f)/NX);
+            float v = b + ((t-b)*(j+0.5f)/NY);
 
-            Ray ray(e_, u_*u + v_*v - w_*d);
+            Vector3 p(0,0,0);
+            Vector3 d(u, v, -dist);
 
-            float t = s.intersect(ray);
-            if (t != -1)
+            Ray ray(p, d);
+
+            if (s2.intersects(ray))
                 buffer[i][j] = Pixel::MakeRGB(255,255,255);
-            else
-                buffer[i][j] = Pixel::MakeRGB(0,0,0);
         }
     }
 

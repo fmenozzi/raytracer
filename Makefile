@@ -10,4 +10,4 @@ all: part1
 part1:
 	@$(CC_DEBUG) $(SRC) -o part1
 	@./part1
-	@eog part1.ppm &
+	@eog part1.ppm 2>/dev/null &
