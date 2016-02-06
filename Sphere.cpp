@@ -5,7 +5,7 @@
 #include <cmath>
 
 bool Sphere::intersects(const Ray& ray) {
-    Vector3 p = ray.p;
+    Vector3 p = ray.p - center;
     Vector3 d = ray.d;
 
     float dp = d.dot(p);
