@@ -2,6 +2,7 @@
 
 #include "Ray.h"
 #include "Vector3.h"
+#include "Sphere.h"
 #include "Pixel.h"
 
 int main() {
@@ -20,6 +21,8 @@ int main() {
     Vector3 v_(0,1,0);
     Vector3 w_(0,0,1);
 
+    Sphere s(Vector3(-4, 0, -7), 1);
+
     Pixel buffer[NX][NY];
     for (int i = 0; i < NX; i++) {
         for (int j = 0; j < NY; j++) {
@@ -27,6 +30,12 @@ int main() {
             float v = b + (t-b)*(j+0.5f)/NY;
 
             Ray ray(e_, u_*u + v_*v - w_*d);
+
+            float t = s.intersect(ray);
+            if (t != -1)
+                buffer[i][j] = Pixel::MakeRGB(255,255,255);
+            else
+                buffer[i][j] = Pixel::MakeRGB(0,0,0);
         }
     }
 
