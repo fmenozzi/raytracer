@@ -33,8 +33,12 @@ int main() {
 
             Ray ray(p, d);
 
-            if (s2.intersects(ray))
-                buffer[i][j] = Pixel::MakeRGB(255,255,255);
+            if (s1.intersects(ray))
+                buffer[i][j] = Pixel::MakeRGB(255, 0, 0);
+            else if (s2.intersects(ray))
+                buffer[i][j] = Pixel::MakeRGB(0, 255, 0);
+            else if (s3.intersects(ray))
+                buffer[i][j] = Pixel::MakeRGB(0, 0, 255);
         }
     }
 
@@ -44,7 +48,7 @@ int main() {
     fprintf(fp, "%d %d %d\n", NX, NY, 255);
     for (int i = 0; i < NX; i++)
         for (int j = 0; j < NY; j++)
-            fprintf(fp, "%d %d %d\n", buffer[i][j].r, buffer[i][j].g, buffer[i][j].b);
+            fprintf(fp, "%d %d %d\n", buffer[j][i].r, buffer[j][i].g, buffer[j][i].b);
     fclose(fp);
 
     return 0;
