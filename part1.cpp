@@ -53,9 +53,10 @@ int main() {
             Ray ray(p, d);
 
             Intersection* hit = surfaces.intersect(ray);
-            if (hit)
+            if (hit) {
                 buffer[i][j] = Color(255, 255, 255);
-            delete hit;
+                delete hit;
+            }
         }
     }
 
