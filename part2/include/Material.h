@@ -15,6 +15,6 @@ struct Material {
         ks(_ks),
         sp(_sp) {}
 
-}
+};
 
 #endif

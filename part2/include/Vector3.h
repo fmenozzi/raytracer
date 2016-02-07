@@ -14,11 +14,9 @@ struct Vector3 {
     Vector3 operator*(float n) const { return Vector3(n*x, n*y, n*z); }
     Vector3 operator-() const { return Vector3(-x, -y, -z); }
 
-    void norm() {
+    Vector3 norm() {
         float n = 1 / sqrt(x*x + y*y + z*z);
-        x = n*x;
-        y = n*y;
-        z = n*z;
+        return Vector3(n*x, n*y, n*z);
     }
 
     float dot(const Vector3& v) const {

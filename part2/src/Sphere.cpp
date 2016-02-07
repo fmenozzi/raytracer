@@ -1,10 +1,11 @@
 #include "Sphere.h"
 #include "Ray.h"
 #include "Vector3.h"
+#include "Intersection.h"
 
 #include <cmath>
 
-Intersection* intersect(const Ray& ray) override {
+Intersection* Sphere::intersect(const Ray& ray) {
     Vector3 p = ray.p - center;
     Vector3 d = ray.d;
 

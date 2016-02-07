@@ -1,11 +1,11 @@
 #ifndef SURFACEGROUP_H_
 #define SURFACEGROUP_H_
 
-#include "Surface.h"
-#include "Ray.h"
-#include "Intersection.h"
-
 #include <vector>
+
+class Surface;
+class Intersection;
+class Ray;
 
 struct SurfaceGroup {
     std::vector<Surface*> surfaces;
@@ -13,6 +13,6 @@ struct SurfaceGroup {
     void add(Surface* surface);
     
     Intersection* intersect(const Ray& ray);
-}
+};
 
 #endif

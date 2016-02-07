@@ -1,9 +1,11 @@
 #include "Plane.h"
+#include "Ray.h"
+#include "Intersection.h"
 
 #include <cmath>
 
-Intersection* Plane::intersects(const Ray& ray) {
-    Vector3 p = ray.p;
+Intersection* Plane::intersect(const Ray& ray) {
+    //Vector3 p = ray.p;
     Vector3 d = ray.d;
 
     // TODO: Use better floating point comparison

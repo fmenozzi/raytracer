@@ -2,19 +2,23 @@
 #define PLANE_H_
 
 #include "Surface.h"
-#include "Intersection.h"
 #include "Vector3.h"
-#include "Ray.h"
+#include "Material.h"
+
+class Intersection;
+class Ray;
 
 struct Plane : public Surface {
-    Vector3 abc;
-    float d;
+    float a, b, c, d;
     Vector3 n;
 
-    Plane(const Vector3& _abc, float _d, const Vector3& _n) : 
-        abc(_abc), 
+    Plane(float _a, float _b, float _c, float _d, Material _mat) : 
+        Surface(_mat),
+        a(_a), 
+        b(_b), 
+        c(_c), 
         d(_d), 
-        n(_n) {}
+        n(Vector3(_a, _b, _c).norm()) {}
 
     Intersection* intersect(const Ray& ray) override;
 };
