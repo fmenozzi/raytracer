@@ -11,9 +11,9 @@ all: part1 part2
 part1:
 	@$(CC_DEBUG) $(INC) part1.cpp $(SRC) -o part1
 	@./part1
-	@eog part1.ppm 2>/dev/null &
+	@eog images/part1.ppm 2>/dev/null &
 
 part2:
 	@$(CC_DEBUG) $(INC) part2.cpp $(SRC) -o part2
 	@./part2
-	@eog part2.ppm 2>/dev/null &
+	@eog images/part2.ppm 2>/dev/null &
