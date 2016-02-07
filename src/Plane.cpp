@@ -8,8 +8,7 @@ Intersection* Plane::intersect(const Ray& ray) {
     //Vector3 p = ray.p;
     Vector3 d = ray.d;
 
-    // TODO: Use better floating point comparison
-    if (n.dot(d) == 0.0f) {
+    if (n.dot(d) < 0.0f) {
         return nullptr;
     } else {
         // TODO: Bogus normal for now

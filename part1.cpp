@@ -44,7 +44,7 @@ int main() {
 
             Ray ray(p, d);
 
-            //if (pl->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
+            if (pl->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
             if (s1->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
             if (s2->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
             if (s3->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
