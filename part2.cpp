@@ -16,7 +16,9 @@ int main() {
 
     constexpr float dist = 0.1f;
 
-    Sphere s2(Vector3(0, 0, -7), 2, Color(255, 255, 255));
+    Sphere s1(Vector3(-4, 0, -7), 1, Color(255, 0, 0));
+    Sphere s2(Vector3( 0, 0, -7), 2, Color(0, 255, 0));
+    Sphere s3(Vector3( 4, 0, -7), 1, Color(0, 0, 255));
 
     Color buffer[NX][NY];
 
@@ -31,13 +33,17 @@ int main() {
 
             Ray ray(p, d);
 
-            if (s2.intersects(ray))
+            if (s1.intersects(ray))
+                buffer[i][j] = s1.color;
+            else if (s2.intersects(ray))
                 buffer[i][j] = s2.color;
+            else if (s3.intersects(ray))
+                buffer[i][j] = s3.color;
         }
     }
 
     // Write buffer to image file
-    FILE* fp = fopen("part1.ppm", "w");
+    FILE* fp = fopen("part2.ppm", "w");
     fprintf(fp, "P3\n");
     fprintf(fp, "%d %d %d\n", NX, NY, 255);
     for (int i = 0; i < NX; i++)
