@@ -4,6 +4,7 @@
 #include "Color.h"
 #include "Ray.h"
 #include "Surface.h"
+#include "SurfaceGroup.h"
 #include "Sphere.h"
 #include "Plane.h"
 #include "Intersection.h"
@@ -31,6 +32,13 @@ int main() {
     Surface* s2 = new Sphere(Vector3( 0, 0, -7), 2, m2);
     Surface* s3 = new Sphere(Vector3( 4, 0, -7), 1, m3);
 
+    // Add surfaces to group
+    SurfaceGroup surfaces;
+    surfaces.add(pl);
+    surfaces.add(s1);
+    surfaces.add(s2);
+    surfaces.add(s3);
+
     Color buffer[NX][NY];
 
     // Fill pixel buffer
@@ -44,17 +52,12 @@ int main() {
 
             Ray ray(p, d);
 
-            if (pl->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
-            if (s1->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
-            if (s2->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
-            if (s3->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
+            Intersection* hit = surfaces.intersect(ray);
+            if (hit)
+                buffer[i][j] = Color(255, 255, 255);
+            delete hit;
         }
     }
-
-    delete pl;
-    delete s1;
-    delete s2;
-    delete s3;
 
     // Write buffer to image file
     FILE* fp = fopen("images/part1.ppm", "w");

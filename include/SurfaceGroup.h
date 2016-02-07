@@ -3,12 +3,19 @@
 
 #include <vector>
 
-class Surface;
+#include "Surface.h"
+
+//class Surface;
 class Intersection;
 class Ray;
 
 struct SurfaceGroup {
     std::vector<Surface*> surfaces;
+
+    virtual ~SurfaceGroup() {
+        for (auto surface : surfaces)
+            delete surface;
+    }
 
     void add(Surface* surface);
     
