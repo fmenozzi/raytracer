@@ -5,7 +5,6 @@
 
 #include "Surface.h"
 
-//class Surface;
 class Intersection;
 class Ray;
 

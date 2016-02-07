@@ -8,6 +8,7 @@
 #include "Sphere.h"
 #include "Plane.h"
 #include "Intersection.h"
+#include "Scene.h"
 
 int main() {
     constexpr int NX = 512;
@@ -39,9 +40,11 @@ int main() {
     surfaces.add(s2);
     surfaces.add(s3);
 
-    Color buffer[NX][NY];
+    // Add group to scene
+    Scene scene(surfaces);
 
     // Fill pixel buffer
+    Color buffer[NX][NY];
     for (int i = 0; i < NX; i++) {
         for (int j = 0; j < NY; j++) {
             float u = l + ((r-l)*(i+0.5f)/NX);
@@ -52,7 +55,7 @@ int main() {
 
             Ray ray(p, d);
 
-            Intersection* hit = surfaces.intersect(ray);
+            Intersection* hit = scene.intersect(ray);
             if (hit) {
                 buffer[i][j] = Color(255, 255, 255);
                 delete hit;
