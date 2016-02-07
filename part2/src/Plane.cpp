@@ -2,8 +2,16 @@
 
 #include <cmath>
 
-#include <cstdio>
+Intersection* Plane::intersects(const Ray& ray) {
+    Vector3 p = ray.p;
+    Vector3 d = ray.d;
 
-bool Plane::intersects(const Ray& ray) {
-    return fabs(n.dot(ray.d)) > 0.01;
+    // TODO: Use better floating point comparison
+    if (n.dot(d) == 0.0f) {
+        return nullptr;
+    } else {
+        // TODO: Bogus normal for now
+        // TODO: Bogus t for now
+        return new Intersection(this, Vector3(0,0,0), 0);
+    }
 }

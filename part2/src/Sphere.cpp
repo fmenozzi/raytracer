@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-bool Sphere::intersects(const Ray& ray) {
+Intersection* intersect(const Ray& ray) override {
     Vector3 p = ray.p - center;
     Vector3 d = ray.d;
 
@@ -12,7 +12,13 @@ bool Sphere::intersects(const Ray& ray) {
     float dd = d.dot(d);
     float pp = p.dot(p);
 
-    float det = (dp*dp) - (dd*(pp-(radius*radius)));
+    float discr = (dp*dp) - (dd*(pp-(radius*radius)));
 
-    return det > 0;
+    if (discr < 0) {
+        return nullptr;
+    } else {
+        // TODO: Bogus normal for now
+        // TODO: Bogus t for now
+        return new Intersection(this, Vector3(0,0,0), 0);
+    }
 }

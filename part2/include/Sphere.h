@@ -1,11 +1,13 @@
 #ifndef SPHERE_H_
 #define SPHERE_H_
 
+#include "Surface.h"
+#include "Intersection.h"
 #include "Vector3.h"
 #include "Ray.h"
 #include "Color.h"
 
-struct Sphere {
+struct Sphere : public Surface {
     Vector3 center;
     float radius;
     Color color;
@@ -15,7 +17,7 @@ struct Sphere {
           radius(_radius), 
           color(_color) {}
 
-    bool intersects(const Ray& ray);
+    Intersection* intersect(const Ray& ray) override;
 };
 
 #endif
