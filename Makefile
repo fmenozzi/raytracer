@@ -9,6 +9,6 @@ INC = -Iinclude
 all: part1
 
 part1:
-	@$(CC_DEBUG) $(INC) part1.cpp $(SRC) -o ../bin/part1
-	@../bin/part1
-	@eog ../images/part1.ppm 2>/dev/null &
+	@$(CC_DEBUG) $(INC) part1.cpp $(SRC) -o bin/part1
+	@./bin/part1
+	@eog images/part1.ppm 2>/dev/null &

@@ -57,7 +57,7 @@ int main() {
     delete s3;
 
     // Write buffer to image file
-    FILE* fp = fopen("../images/part2.ppm", "w");
+    FILE* fp = fopen("images/part1.ppm", "w");
     fprintf(fp, "P3\n");
     fprintf(fp, "%d %d %d\n", NX, NY, 255);
     for (int i = 0; i < NX; i++)
