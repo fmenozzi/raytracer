@@ -28,8 +28,8 @@ int main() {
     // Surfaces
     Surface* pl = new Plane(0, 1, 0, 2, mp);
     Surface* s1 = new Sphere(Vector3(-4, 0, -7), 1, m1);
-    Surface* s2 = new Sphere(Vector3( 0, 0, -7), 1, m2);
-    Surface* s3 = new Sphere(Vector3(-4, 0, -7), 1, m3);
+    Surface* s2 = new Sphere(Vector3( 0, 0, -7), 2, m2);
+    Surface* s3 = new Sphere(Vector3( 4, 0, -7), 1, m3);
 
     Color buffer[NX][NY];
 
@@ -44,7 +44,7 @@ int main() {
 
             Ray ray(p, d);
 
-            if (pl->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
+            //if (pl->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
             if (s1->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
             if (s2->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
             if (s3->intersect(ray) != nullptr) buffer[i][j] = Color(255, 255, 255);
