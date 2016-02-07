@@ -4,6 +4,7 @@
 #include "Vector3.h"
 #include "Sphere.h"
 #include "Color.h"
+#include "Plane.h"
 
 int main() {
     constexpr int NX = 512;
@@ -20,6 +21,8 @@ int main() {
     Sphere s2(Vector3( 0, 0, -7), 2, Color(0, 255, 0));
     Sphere s3(Vector3( 4, 0, -7), 1, Color(0, 0, 255));
 
+    Plane pl(Vector3(0, 0, -2), Vector3(0, 1, 0));
+
     Color buffer[NX][NY];
 
     // Fill pixel buffer
@@ -33,6 +36,9 @@ int main() {
 
             Ray ray(p, d);
 
+            if (pl.intersects(ray))
+                buffer[i][j] = Color(255, 255, 255);
+
             if (s1.intersects(ray))
                 buffer[i][j] = s1.color;
             else if (s2.intersects(ray))
@@ -43,7 +49,7 @@ int main() {
     }
 
     // Write buffer to image file
-    FILE* fp = fopen("images/part2.ppm", "w");
+    FILE* fp = fopen("../images/part2.ppm", "w");
     fprintf(fp, "P3\n");
     fprintf(fp, "%d %d %d\n", NX, NY, 255);
     for (int i = 0; i < NX; i++)
