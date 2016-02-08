@@ -11,12 +11,9 @@ Intersection* Plane::intersect(const Ray& ray) {
     if (n.dot(d) < 0.0f) {
         return nullptr;
     } else {
-        // TODO: Bogus normal for now
         // TODO: Bogus t for now
 
         float t = 0;
-        Vector3 n(0,0,0);
-
 
         return new Intersection(this, n, t);
     }
