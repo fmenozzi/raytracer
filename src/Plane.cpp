@@ -5,7 +5,7 @@
 #include <cmath>
 
 Intersection* Plane::intersect(const Ray& ray) {
-    //Vector3 p = ray.p;
+    Vector3 p = ray.p;
     Vector3 d = ray.d;
 
     if (n.dot(d) < 0.0f) {
@@ -13,6 +13,11 @@ Intersection* Plane::intersect(const Ray& ray) {
     } else {
         // TODO: Bogus normal for now
         // TODO: Bogus t for now
-        return new Intersection(this, Vector3(0,0,0), 0);
+
+        float t = 0;
+        Vector3 n(0,0,0);
+
+
+        return new Intersection(this, n, t);
     }
 }

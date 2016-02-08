@@ -29,16 +29,20 @@ int main() {
 
     // Surfaces
     Surface* pl = new Plane(0, 1, 0, 2, mp);
+    /*
     Surface* s1 = new Sphere(Vector3(-4, 0, -7), 1, m1);
     Surface* s2 = new Sphere(Vector3( 0, 0, -7), 2, m2);
     Surface* s3 = new Sphere(Vector3( 4, 0, -7), 1, m3);
+    */
 
     // Add surfaces to group
     SurfaceGroup surfaces;
     surfaces.add(pl);
+    /*
     surfaces.add(s1);
     surfaces.add(s2);
     surfaces.add(s3);
+    */
 
     // Light
     Light light(Vector3(-4, 4, -3), 1);

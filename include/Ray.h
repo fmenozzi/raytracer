@@ -9,7 +9,7 @@ struct Ray {
 
     Ray(const Vector3& _p, const Vector3& _d): p(_p), d(_d) {}
 
-    Vector3 evaluate(float t) {
+    Vector3 evaluate(float t) const {
         return p + d*t;
     }
 };

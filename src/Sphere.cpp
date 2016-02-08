@@ -20,6 +20,10 @@ Intersection* Sphere::intersect(const Ray& ray) {
     } else {
         // TODO: Bogus normal for now
         // TODO: Bogus t for now
-        return new Intersection(this, Vector3(0,0,0), 0);
+
+        float t = 0;
+        Vector3 n(0,0,0);
+
+        return new Intersection(this, n, t);
     }
 }

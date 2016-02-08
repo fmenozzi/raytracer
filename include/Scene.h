@@ -1,11 +1,12 @@
 #ifndef SCENE_H_
 #define SCENE_H_
 
-#include "SurfaceGroup.h"
+#include "Light.h"
 #include "Color.h"
 
 class Intersection;
 class Ray;
+class SurfaceGroup;
 
 struct Scene {
     SurfaceGroup& surfaces;
@@ -16,7 +17,7 @@ struct Scene {
         light(_light) {}
 
     Intersection* intersect(const Ray& ray);
-    Color shade(const Ray& ray, Intersection* hit, const Color& ambient);
+    Color shade(const Ray& ray, Intersection* hit);
 };
 
 #endif
