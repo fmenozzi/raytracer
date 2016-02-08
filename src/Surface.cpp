@@ -6,7 +6,7 @@
 
 // TODO: Add "LightGroup" that contains vector of Lights
 
-Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n, 
+Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& normal, 
                      const Light& light, const SurfaceList& surfaces) {
     // Ambient color of black
     Color res(0,0,0);

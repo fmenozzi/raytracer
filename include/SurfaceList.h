@@ -18,7 +18,7 @@ struct SurfaceList {
 
     void add(Surface* surface);
     
-    Intersection* intersect(const Ray& ray);
+    Intersection* intersect(const Ray& ray) const;
 };
 
 #endif

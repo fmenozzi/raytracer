@@ -40,8 +40,11 @@ int main() {
     surfaces.add(s2);
     surfaces.add(s3);
 
+    // Light
+    Light light(Vector3(-4, 4, -3), 1);
+
     // Add group to scene
-    Scene scene(surfaces);
+    Scene scene(surfaces, light);
 
     // Fill pixel buffer
     Color buffer[NX][NY];
