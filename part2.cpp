@@ -40,8 +40,11 @@ int main() {
     surfaces.add(s2);
     surfaces.add(s3);
 
-    // Add group to scene
-    Scene scene(surfaces);
+    // Light
+    Light light(Vector3(-4, 4, -3), 1);
+
+    // Add surfaces and light to scene
+    Scene scene(surfaces, light);
 
     // Fill pixel buffer
     Color buffer[NX][NY];
@@ -56,10 +59,9 @@ int main() {
             Ray ray(p, d);
 
             Intersection* hit = scene.intersect(ray);
-            if (hit) {
+            if (hit)
                 buffer[i][j] = Color(255, 255, 255);
-                delete hit;
-            }
+            delete hit;
         }
     }
 
