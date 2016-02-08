@@ -6,13 +6,13 @@
 
 class Intersection;
 class Ray;
-class SurfaceGroup;
+class SurfaceList;
 
 struct Scene {
-    SurfaceGroup& surfaces;
+    SurfaceList& surfaces;
     Light light;
    
-    Scene(SurfaceGroup& _surfaces, const Light& _light) :
+    Scene(SurfaceList& _surfaces, const Light& _light) :
         surfaces(_surfaces),
         light(_light) {}
 

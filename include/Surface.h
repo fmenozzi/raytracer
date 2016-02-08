@@ -8,7 +8,7 @@ class Vector3;
 class Intersection;
 class Ray;
 class Light;
-class SurfaceGroup;
+class SurfaceList;
 
 struct Surface {
     Material mat;
@@ -19,7 +19,7 @@ struct Surface {
     virtual Intersection* intersect(const Ray& ray) = 0;
 
     Color shade(const Ray& ray, const Vector3& point, const Vector3& n, 
-                const Light& light, const SurfaceGroup& surfaces);
+                const Light& light, const SurfaceList& surfaces);
     
 };
 

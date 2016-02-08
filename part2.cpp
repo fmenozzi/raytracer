@@ -4,7 +4,7 @@
 #include "Color.h"
 #include "Ray.h"
 #include "Surface.h"
-#include "SurfaceGroup.h"
+#include "SurfaceList.h"
 #include "Sphere.h"
 #include "Plane.h"
 #include "Intersection.h"
@@ -36,7 +36,7 @@ int main() {
     */
 
     // Add surfaces to group
-    SurfaceGroup surfaces;
+    SurfaceList surfaces;
     surfaces.add(pl);
     /*
     surfaces.add(s1);

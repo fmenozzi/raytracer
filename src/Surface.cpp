@@ -2,12 +2,12 @@
 #include "Vector3.h"
 #include "Ray.h"
 #include "Light.h"
-#include "SurfaceGroup.h"
+#include "SurfaceList.h"
 
 // TODO: Add "LightGroup" that contains vector of Lights
 
 Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n, 
-                     const Light& light, const SurfaceGroup& surfaces) {
+                     const Light& light, const SurfaceList& surfaces) {
     // Ambient color of black
     Color res(0,0,0);
 

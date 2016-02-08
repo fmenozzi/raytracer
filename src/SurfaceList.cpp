@@ -1,11 +1,11 @@
-#include "SurfaceGroup.h"
+#include "SurfaceList.h"
 #include "Intersection.h"
 
-void SurfaceGroup::add(Surface* surface) {
+void SurfaceList::add(Surface* surface) {
     surfaces.push_back(surface);
 }
 
-Intersection* SurfaceGroup::intersect(const Ray& ray) {
+Intersection* SurfaceList::intersect(const Ray& ray) {
     Intersection* result = nullptr;
     for (const auto& surface : surfaces) {
         Intersection* hit = surface->intersect(ray);

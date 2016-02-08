@@ -1,5 +1,5 @@
-#ifndef SURFACEGROUP_H_
-#define SURFACEGROUP_H_
+#ifndef SURFACELIST_H_
+#define SURFACELIST_H_
 
 #include <vector>
 
@@ -8,10 +8,10 @@
 class Intersection;
 class Ray;
 
-struct SurfaceGroup {
+struct SurfaceList {
     std::vector<Surface*> surfaces;
 
-    virtual ~SurfaceGroup() {
+    virtual ~SurfaceList() {
         for (auto surface : surfaces)
             delete surface;
     }
