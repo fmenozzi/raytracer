@@ -15,16 +15,16 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
     // Shadow correction
     Vector3 corrected_point = point; // + 0.01*n;
 
-    // Generate shadow ray
-    Ray shadowray(corrected_point, light.pos - corrected_point);
+    // Generate ray from point to light
+    Ray lightray(corrected_point, light.pos - corrected_point);
 
-    // Intersect shadow with surfaces
-    Intersection* shadowhit = surfaces.intersect(shadowray);
+    // Intersect light ray with surfaces
+    Intersection* lighthit = surfaces.intersect(lightray);
 
     // Apply ambient, diffuse, and specular (Phong) shading
-    if (!shadowhit) {
+    if (lighthit) {
         Vector3 v = -ray.d.norm();
-        Vector3 l = shadowray.d.norm();
+        Vector3 l = lightray.d.norm();
         Vector3 h = (v+l).norm();
 
         float I = light.intensity;
@@ -34,7 +34,7 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
         res = res + Ld + Ls;
     }
 
-    delete shadowhit;
+    delete lighthit;
 
     return res;
 }
