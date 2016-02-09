@@ -25,3 +25,12 @@ part2:
 	@./bin/part2
 	@echo "Done"
 	@eog images/part2.ppm 2>/dev/null &
+
+part3:
+	@echo "Part 3"
+	@echo "Building..."
+	@$(CC_DEBUG) $(INC) part3.cpp $(SRC) -o bin/part3
+	@echo "Rendering..."
+	@./bin/part3
+	@echo "Done"
+	@eog images/part3.ppm 2>/dev/null &
