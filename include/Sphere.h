@@ -13,7 +13,7 @@ struct Sphere : public Surface {
     float radius;
 
     Sphere(const Vector3& _center, float _radius, Material _mat) : 
-        Surface(mat),
+        Surface(_mat),
         center(_center),
         radius(_radius) {}
 

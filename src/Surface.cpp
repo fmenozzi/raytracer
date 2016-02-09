@@ -3,6 +3,7 @@
 #include "Ray.h"
 #include "Light.h"
 #include "SurfaceList.h"
+#include "Intersection.h"
 
 #include <algorithm>
 
@@ -33,6 +34,8 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
 
         res = res + Ld + Ls + La;
     }
+
+    delete shadowhit;
 
     return res;
 }
