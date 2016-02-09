@@ -12,9 +12,8 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
     // Ambient color
     Color res = mat.ka * light.intensity;
 
-    // TODO: Apply shadow correction
-    Vector3 corrected_point = point;
-    //Vector3 corrected_point = point + n*0.01;
+    // Apply shadow correction
+    Vector3 corrected_point = point + n*0.01;
 
     // Generate ray from point to light
     Ray lightray(corrected_point, light.pos - corrected_point);
@@ -23,7 +22,7 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
     Intersection* lighthit = surfaces.intersect(lightray);
 
     // Apply ambient, diffuse, and specular (Phong) shading
-    if (lighthit) {
+    if (!lighthit) {
         Vector3 v = -ray.d.norm();
         Vector3 l = lightray.d.norm();
         Vector3 h = (v+l).norm();

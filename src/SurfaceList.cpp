@@ -16,11 +16,6 @@ Intersection* SurfaceList::intersect(const Ray& ray) const {
                 delete result;
             result = hit;
         }
-        //*/
-        /*
-        if (hit)
-            return hit;
-        //*/
     }
     return result;
 }

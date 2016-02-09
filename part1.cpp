@@ -70,7 +70,7 @@ int main() {
     FILE* fp = fopen("images/part1.ppm", "w");
     fprintf(fp, "P3\n");
     fprintf(fp, "%d %d %d\n", NX, NY, 255);
-    for (int i = 0; i < NX; i++) {
+    for (int i = NX-1; i >= 0; i--) {
         for (int j = 0; j < NY; j++) {
             // Convert float RGB to int RGB
             int ir = (int)(buffer[j][i].r * 255);
