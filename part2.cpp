@@ -10,17 +10,6 @@
 #include "Intersection.h"
 #include "Scene.h"
 
-/*
- * TODO: 
- *
- * Here's the problem: I've been using a coordinate system that uses
- * the UPPER-left corner, while the uv-conversion in the text uses an
- * origin in the LOWER-left corner. My y dimension is therefore flipped.
- *
- * Need to fix that, keeping in mind that I need to provide data to .ppm
- * files starting from the upper left
- */
-
 int main() {
     constexpr int NX = 512;
     constexpr int NY = 512;
@@ -52,7 +41,7 @@ int main() {
     Scene scene(surfaces, light);
 
     // Fill pixel buffer
-    Color buffer[NX][NY]; // TODO: Must increase stack size!
+    Color* buffer = new Color[NX*NY];
     for (int i = 0; i < NX; i++) {
         for (int j = 0; j < NY; j++) {
             float u = l + ((r-l)*(i+0.5f)/NX);
@@ -65,7 +54,7 @@ int main() {
 
             Intersection* hit = scene.intersect(ray);
             if (hit)
-                buffer[i][j] = scene.shade(ray, hit).correct(2.2);
+                buffer[i*NY + j] = scene.shade(ray, hit).correct(2.2);
             delete hit;
         }
     }
@@ -77,14 +66,16 @@ int main() {
     for (int i = NX-1; i >= 0; i--) {
         for (int j = 0; j < NY; j++) {
             // Convert float RGB to int RGB
-            int ir = (int)(buffer[j][i].r * 255);
-            int ig = (int)(buffer[j][i].g * 255);
-            int ib = (int)(buffer[j][i].b * 255);
+            int ir = (int)(buffer[j*NY + i].r * 255);
+            int ig = (int)(buffer[j*NY + i].g * 255);
+            int ib = (int)(buffer[j*NY + i].b * 255);
 
             fprintf(fp, "%d %d %d\n", ir, ig, ib);
         }
     }
     fclose(fp);
+
+    delete[] buffer;
 
     return 0;
 }
