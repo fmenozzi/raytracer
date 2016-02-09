@@ -10,7 +10,8 @@ Intersection* Plane::intersect(const Ray& ray) {
     Vector3 p = ray.p;
     Vector3 d = ray.d;
 
-    if (n.dot(d) < 0.0f) {
+    // TODO: Used to be <
+    if (n.dot(d) > 0.0f) {
         return nullptr;
     } else {
         // TODO: Need general way of finding point on plane

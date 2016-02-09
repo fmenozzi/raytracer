@@ -5,8 +5,6 @@
 
 #include <cmath>
 
-#include <cstdio>
-
 Intersection* Sphere::intersect(const Ray& ray) {
     Vector3 p = ray.p - center;
     Vector3 d = ray.d;
@@ -24,11 +22,11 @@ Intersection* Sphere::intersect(const Ray& ray) {
         float t0 = (-dp - sqrt(discr)) / dd;
         float t1 = (-dp + sqrt(discr)) / dd;
 
-        // Sphere is behind camera
+        // Entire sphere is behind camera
         if (t1 < 0)
             return nullptr;
 
-        // If t0 is behind camera, use t1
+        // Front of sphere is behind camera
         float t = t0 < 0 ? t1 : t0;
 
         // Calculate surface normal
