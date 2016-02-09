@@ -4,10 +4,17 @@
 #include <cstdint>
 
 struct Color {
-    uint8_t r, g, b;
+    float r, g, b;
 
     Color() : r(0), g(0), b(0) {}
-    Color(uint8_t _r, uint8_t _g, uint8_t _b) : r(_r), g(_g), b(_b) {}
+    Color(float _r, float _g, float _b) : r(_r), g(_g), b(_b) {}
+
+    Color operator+(const Color& c) {
+        return Color(r+c.r, g+c.g, b+c.b);
+    }
+    Color operator*(float f) {
+        return Color(f*r, f*g, f*b);
+    }
 };
 
 #endif

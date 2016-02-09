@@ -64,7 +64,7 @@ int main() {
 
             Intersection* hit = scene.intersect(ray);
             if (hit)
-                buffer[i][j] = Color(255, 255, 255);
+                buffer[i][j] = scene.shade(ray, hit);
             delete hit;
         }
     }
@@ -73,9 +73,16 @@ int main() {
     FILE* fp = fopen("images/part2.ppm", "w");
     fprintf(fp, "P3\n");
     fprintf(fp, "%d %d %d\n", NX, NY, 255);
-    for (int i = 0; i < NX; i++)
-        for (int j = 0; j < NY; j++)
-            fprintf(fp, "%d %d %d\n", buffer[j][i].r, buffer[j][i].g, buffer[j][i].b);
+    for (int i = 0; i < NX; i++) {
+        for (int j = 0; j < NY; j++) {
+            // Convert float RGB to int RGB
+            int ir = (int)(buffer[j][i].r * 255);
+            int ig = (int)(buffer[j][i].g * 255);
+            int ib = (int)(buffer[j][i].b * 255);
+
+            fprintf(fp, "%d %d %d\n", ir, ig, ib);
+        }
+    }
     fclose(fp);
 
     return 0;
