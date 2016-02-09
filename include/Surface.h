@@ -18,7 +18,7 @@ struct Surface {
 
     virtual Intersection* intersect(const Ray& ray) = 0;
 
-    Color shade(const Ray& ray, const Vector3& point, const Vector3& normal,
+    Color shade(const Ray& ray, const Vector3& point, const Vector3& n,
                 const Light& light, const SurfaceList& surfaces);
     
 };
