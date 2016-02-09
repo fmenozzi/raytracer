@@ -13,7 +13,7 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
     Color res = mat.ka * light.intensity;
 
     // Shadow correction
-    Vector3 corrected_point = point; // + 0.01*n;
+    Vector3 corrected_point = point; // + n*0.01;
 
     // Generate ray from point to light
     Ray lightray(corrected_point, light.pos - corrected_point);
