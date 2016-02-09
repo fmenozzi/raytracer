@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <cstdlib>
 
 #include "Vector3.h"
 #include "Color.h"
@@ -21,6 +22,9 @@ int main() {
 
     constexpr float dist = 0.1f;
 
+    constexpr int SAMPLES   = 64;
+    constexpr int SAMPLEDIM = 8;
+
     // Materials
     Material mp(Color(0.2, 0.2, 0.2), Color(1.0, 1.0, 1.0), Color(0.0, 0.0, 0.0),  0.0);
     Material m1(Color(0.2, 0.0, 0.0), Color(1.0, 0.0, 0.0), Color(0.0, 0.0, 0.0),  0.0);
@@ -42,21 +46,33 @@ int main() {
 
     // Fill pixel buffer
     Color* buffer = new Color[NX*NY];
-    for (int i = 0; i < NX; i++) {
-        for (int j = 0; j < NY; j++) {
-            float u = l + ((r-l)*(i+0.5f)/NX);
-            float v = b + ((t-b)*(j+0.5f)/NY);
+    #pragma omp parallel for
+    for (int k = 0; k < NX*NY; k++) {
+        int i = k % NX;
+        int j = k / NX;
+        Color res(0,0,0);
+        for (int si = 0; si < SAMPLEDIM; si++) {
+            for (int sj = 0; sj < SAMPLEDIM; sj++) {
+                // Uniform sampling
+                float x = (i-0.5) + (si)/(float)SAMPLEDIM;
+                float y = (j-0.5) + (sj)/(float)SAMPLEDIM;
+                
+                float u = l + ((r-l)*(x+0.5f)/NX);
+                float v = b + ((t-b)*(y+0.5f)/NY);
 
-            Vector3 p(0,0,0);
-            Vector3 d(u, v, -dist);
+                Vector3 p(0,0,0);
+                Vector3 d(u, v, -dist);
 
-            Ray ray(p, d);
+                Ray ray(p, d);
 
-            Intersection* hit = scene.intersect(ray);
-            if (hit)
-                buffer[i*NY + j] = scene.shade(ray, hit).correct(2.2);
-            delete hit;
+                Intersection* hit = scene.intersect(ray);
+                if (hit)
+                    res += scene.shade(ray, hit).correct(2.2);
+                delete hit;
+
+            }
         }
+        buffer[i*NY + j] = res / SAMPLES;
     }
 
     // Write buffer to image file

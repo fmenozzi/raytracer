@@ -31,7 +31,7 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
         Color Ld = mat.kd * I * std::max(0.f, n.dot(l));
         Color Ls = mat.ks * I * std::pow(std::max(0.f, n.dot(h)), mat.sp);
 
-        res = res + Ld + Ls;
+        res += Ld + Ls;
     }
 
     delete lighthit;
