@@ -13,7 +13,9 @@ Intersection* Plane::intersect(const Ray& ray) {
     if (n.dot(d) < 0.0f) {
         return nullptr;
     } else {
-        float t = (p.dot(n) + this->d) / d.dot(n);
+        // TODO: Need general way of finding point on plane
+        Vector3 a(0,-2,0);
+        float t = (a-p).dot(n) / d.dot(n);
         return new Intersection(this, n, t);
     }
 }
