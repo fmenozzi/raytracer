@@ -32,7 +32,7 @@ Intersection* Sphere::intersect(const Ray& ray) {
         float t = t0 < 0 ? t1 : t0;
 
         // Calculate surface normal
-        Vector3 n = (center - ray.evaluate(t)).norm();
+        Vector3 n = (ray.evaluate(t) - center).norm();
 
         return new Intersection(this, n, t);
     }
