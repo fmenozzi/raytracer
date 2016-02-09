@@ -11,10 +11,10 @@ struct Vector3 {
 
     Vector3 operator+(const Vector3& v) const { return Vector3(x+v.x, y+v.y, z+v.z); }
     Vector3 operator-(const Vector3& v) const { return Vector3(x-v.x, y-v.y, z-v.z); }
-    Vector3 operator*(float n) const { return Vector3(n*x, n*y, n*z); }
-    Vector3 operator-() const { return Vector3(-x, -y, -z); }
+    Vector3 operator*(float n)          const { return Vector3(n*x, n*y, n*z); }
+    Vector3 operator-()                 const { return Vector3(-x, -y, -z); }
 
-    Vector3 norm() {
+    Vector3 norm() const {
         float n = 1 / sqrt(x*x + y*y + z*z);
         return Vector3(n*x, n*y, n*z);
     }
