@@ -23,7 +23,7 @@ int main() {
     constexpr float dist = 0.1f;
 
     constexpr int SAMPLES   = 64;
-    constexpr int SAMPLEDIM = 8;
+    constexpr int SAMPLEDIM = sqrt(SAMPLES);
 
     // Materials
     Material mp(Color(0.2, 0.2, 0.2), Color(1.0, 1.0, 1.0), Color(0.0, 0.0, 0.0),  0.0);
@@ -69,7 +69,6 @@ int main() {
                 if (hit)
                     res += scene.shade(ray, hit).correct(2.2);
                 delete hit;
-
             }
         }
         buffer[i*NY + j] = res / SAMPLES;
