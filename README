@@ -8,7 +8,7 @@ This assignment has three parts, as described in pa1.pdf:
 
 The provided Makefile can be used to build individual parts (e.g. make part1) or
 build all three parts together (make). In either case, the result will be a
-binary in the "bin" directory and a .ppm image of the result in the "images"
+binary in the current directory and a .ppm image of the result in the "images"
 directory.
 
 Because I chose not to use OpenGL for this assignment, there are no external
