@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "Surface.h"
+#include "Intersection.h"
 
-class Intersection;
 class Ray;
 
 struct SurfaceList {
@@ -18,7 +18,7 @@ struct SurfaceList {
 
     void add(Surface* surface);
     
-    Intersection* intersect(const Ray& ray) const;
+    Intersection intersect(const Ray& ray) const;
 };
 
 #endif

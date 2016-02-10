@@ -3,8 +3,8 @@
 
 #include "Light.h"
 #include "Color.h"
+#include "Intersection.h"
 
-class Intersection;
 class Ray;
 class SurfaceList;
 
@@ -16,8 +16,8 @@ struct Scene {
         surfaces(_surfaces),
         light(_light) {}
 
-    Intersection* intersect(const Ray& ray);
-    Color shade(const Ray& ray, Intersection* hit);
+    Intersection intersect(const Ray& ray);
+    Color shade(const Ray& ray, const Intersection& hit);
 };
 
 #endif
