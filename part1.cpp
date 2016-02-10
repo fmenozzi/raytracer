@@ -59,10 +59,9 @@ int main() {
             Ray ray(p, d);
 
             Intersection* hit = scene.intersect(ray);
-            if (hit) {
+            if (hit) 
                 buffer[i][j] = Color(1.0, 1.0, 1.0);
-                delete hit;
-            }
+            delete hit;
         }
     }
 
