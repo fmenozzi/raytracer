@@ -11,6 +11,8 @@
 #include "Intersection.h"
 #include "Scene.h"
 
+#include "omp.h"
+
 int main() {
     constexpr int NX = 512;
     constexpr int NY = 512;
