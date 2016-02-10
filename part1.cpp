@@ -28,17 +28,11 @@ int main() {
     Material m3(Color(0.0, 0.0, 0.2), Color(0.0, 0.0, 1.0), Color(0.0, 0.0, 0.0),  0.0);
 
     // Surfaces
-    Surface* pl = new Plane(0, 1, 0, 2, mp);
-    Surface* s1 = new Sphere(Vector3(-4, 0, -7), 1, m1);
-    Surface* s2 = new Sphere(Vector3( 0, 0, -7), 2, m2);
-    Surface* s3 = new Sphere(Vector3( 4, 0, -7), 1, m3);
-
-    // Add surfaces to group
     SurfaceList surfaces;
-    surfaces.add(pl);
-    surfaces.add(s1);
-    surfaces.add(s2);
-    surfaces.add(s3);
+    surfaces.add(new Plane(0, 1, 0, 2, mp));
+    surfaces.add(new Sphere(Vector3(-4, 0, -7), 1, m1));
+    surfaces.add(new Sphere(Vector3( 0, 0, -7), 2, m2));
+    surfaces.add(new Sphere(Vector3( 4, 0, -7), 1, m3));
 
     // Light
     Light light(Vector3(-4, 4, -3), 1);
@@ -47,7 +41,7 @@ int main() {
     Scene scene(surfaces, light);
 
     // Fill pixel buffer
-    Color buffer[NX][NY];
+    Color* buffer = new Color[NX*NY];
     for (int i = 0; i < NX; i++) {
         for (int j = 0; j < NY; j++) {
             float u = l + ((r-l)*(i+0.5f)/NX);
@@ -60,7 +54,8 @@ int main() {
 
             Intersection* hit = scene.intersect(ray);
             if (hit) 
-                buffer[i][j] = Color(1.0, 1.0, 1.0);
+                //buffer[i][j] = Color(1.0, 1.0, 1.0);
+                buffer[i*NY + j] = Color(1.0, 1.0, 1.0);
             delete hit;
         }
     }
@@ -72,14 +67,16 @@ int main() {
     for (int i = NX-1; i >= 0; i--) {
         for (int j = 0; j < NY; j++) {
             // Convert float RGB to int RGB
-            int ir = (int)(buffer[j][i].r * 255);
-            int ig = (int)(buffer[j][i].g * 255);
-            int ib = (int)(buffer[j][i].b * 255);
+            int ir = (int)(buffer[j*NY + i].r * 255);
+            int ig = (int)(buffer[j*NY + i].g * 255);
+            int ib = (int)(buffer[j*NY + i].b * 255);
 
             fprintf(fp, "%d %d %d\n", ir, ig, ib);
         }
     }
     fclose(fp);
+
+    delete[] buffer;
 
     return 0;
 }
