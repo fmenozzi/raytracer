@@ -15,7 +15,6 @@ part1:
 	@echo "Rendering..."
 	@./bin/part1
 	@echo "Done"
-	@eog images/part1.ppm 2>/dev/null &
 
 part2:
 	@echo "Part 2"
@@ -24,7 +23,6 @@ part2:
 	@echo "Rendering..."
 	@./bin/part2
 	@echo "Done"
-	@eog images/part2.ppm 2>/dev/null &
 
 part3:
 	@echo "Part 3"
@@ -33,4 +31,3 @@ part3:
 	@echo "Rendering..."
 	@./bin/part3
 	@echo "Done"
-	@eog images/part3.ppm 2>/dev/null &
