@@ -24,9 +24,7 @@ Color* buffer;
         glClearColor(0,0,0,1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        constexpr int N = 3*NX*NY;
-
-        float* float_buffer = new float[N];
+        float* float_buffer = new float[3*NX*NY];
 
         int k = 0;
         for (int i = 0; i < NX; i++) {
