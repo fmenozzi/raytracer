@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include "omp.h"
+
 #include "Vector3.h"
 #include "Color.h"
 #include "Ray.h"
@@ -10,8 +12,6 @@
 #include "Plane.h"
 #include "Intersection.h"
 #include "Scene.h"
-
-#include "omp.h"
 
 int main() {
     constexpr int NX = 512;
