@@ -9,13 +9,11 @@ struct Intersection {
     Surface* hit;
     Vector3 normal;
     float t;
-    bool valid;
 
-    Intersection(Surface* _hit, const Vector3& _normal, float _t, bool _valid) :
+    Intersection(Surface* _hit, const Vector3& _normal, float _t) :
         hit(_hit),
         normal(_normal),
-        t(_t),
-        valid(_valid) {}
+        t(_t) {}
 };
 
 #endif

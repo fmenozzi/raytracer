@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-Intersection Sphere::intersect(const Ray& ray) {
+Intersection* Sphere::intersect(const Ray& ray) {
     Vector3 p = ray.p - center;
     Vector3 d = ray.d;
 
@@ -15,27 +15,23 @@ Intersection Sphere::intersect(const Ray& ray) {
 
     float discr = (dp*dp) - (dd*(pp-(radius*radius)));
 
-    Intersection i(this, Vector3(0,0,0), 0, false);
-
-    if (discr >= 0) {
+    if (discr < 0) {
+        return nullptr;
+    } else {
         // Find both intersections
         float t0 = (-dp - sqrt(discr)) / dd;
         float t1 = (-dp + sqrt(discr)) / dd;
 
-        if (t1 >= 0) {
-            // Front of sphere is behind camera
-            float t = t0 < 0 ? t1 : t0;
+        // Entire sphere is behind camera
+        if (t1 < 0)
+            return nullptr;
 
-            // Calculate surface normal
-            Vector3 n = (ray.evaluate(t) - center).norm();
+        // Front of sphere is behind camera
+        float t = t0 < 0 ? t1 : t0;
 
-            i.normal = n;
-            i.t = t;
-            i.valid = true;
+        // Calculate surface normal
+        Vector3 n = (ray.evaluate(t) - center).norm();
 
-        }
-
+        return new Intersection(this, n, t);
     }
-
-    return i;
 }

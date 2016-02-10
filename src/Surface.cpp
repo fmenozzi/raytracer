@@ -19,10 +19,10 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
     Ray lightray(corrected_point, light.pos - corrected_point);
 
     // Intersect light ray with surfaces
-    Intersection lighthit = surfaces.intersect(lightray);
+    Intersection* lighthit = surfaces.intersect(lightray);
 
     // Apply ambient, diffuse, and specular (Phong) shading
-    if (!lighthit.valid) {
+    if (!lighthit) {
         Vector3 v = -ray.d.norm();
         Vector3 l = lightray.d.norm();
         Vector3 h = (v+l).norm();
@@ -33,6 +33,8 @@ Color Surface::shade(const Ray& ray, const Vector3& point, const Vector3& n,
 
         res += Ld + Ls;
     }
+
+    delete lighthit;
 
     return res;
 }

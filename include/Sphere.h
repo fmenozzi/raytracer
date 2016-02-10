@@ -4,8 +4,8 @@
 #include "Surface.h"
 #include "Vector3.h"
 #include "Material.h"
-#include "Intersection.h"
 
+class Intersection;
 class Ray;
 
 struct Sphere : public Surface {
@@ -17,7 +17,7 @@ struct Sphere : public Surface {
         center(_center),
         radius(_radius) {}
 
-    Intersection intersect(const Ray& ray) override;
+    Intersection* intersect(const Ray& ray) override;
 };
 
 #endif

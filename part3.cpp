@@ -65,9 +65,10 @@ int main() {
 
                 Ray ray(p, d);
 
-                Intersection hit = scene.intersect(ray);
-                if (hit.valid)
+                Intersection* hit = scene.intersect(ray);
+                if (hit)
                     res += scene.shade(ray, hit).correct(2.2);
+                delete hit;
             }
         }
         buffer[i*NY + j] = res / SAMPLES;
