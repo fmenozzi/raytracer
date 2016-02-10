@@ -31,3 +31,6 @@ part3:
 	@echo "Rendering..."
 	@./part3
 	@echo "Done"
+
+clean:
+	@rm part1 part2 part3
