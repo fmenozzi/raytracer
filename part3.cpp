@@ -1,8 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
 
-#include "omp.h"
-
 #include "Vector3.h"
 #include "Color.h"
 #include "Ray.h"
