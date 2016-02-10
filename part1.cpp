@@ -1,6 +1,8 @@
 #include <cstdio>
 
-#include <GL/glut.h>
+#if defined(USE_OPENGL)
+    #include <GL/glut.h>
+#endif
 
 #include "Vector3.h"
 #include "Color.h"
@@ -17,29 +19,31 @@ constexpr int NY = 512;
 
 Color* buffer;
 
-void gl_display() {
-    glClearColor(0,0,0,1);
-    glClear(GL_COLOR_BUFFER_BIT);
+#if defined(USE_OPENGL)
+    void gl_display() {
+        glClearColor(0,0,0,1);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-    constexpr int N = 3*NX*NY;
+        constexpr int N = 3*NX*NY;
 
-    float* float_buffer = new float[N];
+        float* float_buffer = new float[N];
 
-    int k = 0;
-    for (int i = 0; i < NX; i++) {
-        for (int j = 0; j < NY; j++) {
-            float_buffer[k++] = buffer[j*NY + i].r;
-            float_buffer[k++] = buffer[j*NY + i].g;
-            float_buffer[k++] = buffer[j*NY + i].b;
+        int k = 0;
+        for (int i = 0; i < NX; i++) {
+            for (int j = 0; j < NY; j++) {
+                float_buffer[k++] = buffer[j*NY + i].r;
+                float_buffer[k++] = buffer[j*NY + i].g;
+                float_buffer[k++] = buffer[j*NY + i].b;
+            }
         }
+
+        glDrawPixels(NX, NY, GL_RGB, GL_FLOAT, float_buffer);
+
+        glutSwapBuffers();
+
+        delete[] float_buffer;
     }
-
-    glDrawPixels(NX, NY, GL_RGB, GL_FLOAT, float_buffer);
-
-    glutSwapBuffers();
-
-    delete[] float_buffer;
-}
+#endif
 
 int main(int argc, char* argv[]) {
     constexpr float l = -0.1f;
