@@ -6,16 +6,27 @@ This assignment has three parts, as described in pa1.pdf:
     * Intersections + shading
     * Intersections + shading + antialiasing
 
-The provided Makefile can be used to build individual parts (e.g. make part1) or
-build all three parts together (make). In either case, the result will be a
-binary in the current directory and a .ppm image of the result in the "images"
-directory.
+I have provided a Makefile which can be used to build and render images either
+individually or all at once. Note that I have only tested this code on Linux
+using Ubuntu 14.04.
 
-Because I chose not to use OpenGL for this assignment, there are no external
-dependencies for this project other than a C++11 compiler and the standard
-library. I use OpenMP to shave a few seconds off the running time of Part 3, but
-every somewhat-modern C++ compiler will have that capability built in. Running
-all three parts shouldn't take more than a few seconds.
+There are two ways to render the images:
+    1. Using OpenGL and GLUT
+    2. Writing .ppm files to disk
+
+If you have OpenGL and GLUT installed, ("freeglut3-dev" and "freeglut3" libraries
+on Ubuntu 14.04) you can build individual parts (e.g. "make part1-gl") or all at
+once ("make gl")
+
+If you don't have OpenGL and GLUT installed, you can still render the images
+as .ppm files written to disk, either individually (e.g. "make part1") or all at
+once ("make"). 
+
+If you go the non-GL route, there are no external dependencies for this project
+other than a C++11 compiler and the standard library. I use OpenMP to shave a
+few seconds off the running time of Part 3, but every somewhat-modern C++
+compiler will have that capability built-in. Running all three parts shouldn't
+take more than a few seconds.
 
 For Part 3, I used uniform sampling instead of random sampling to generate the
 64 sample rays within each pixel--the results looked identical, and the uniform

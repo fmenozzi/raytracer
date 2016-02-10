@@ -1,5 +1,7 @@
 #include <cstdio>
 
+#include <GL/glut.h>
+
 #include "Vector3.h"
 #include "Color.h"
 #include "Ray.h"
@@ -10,10 +12,36 @@
 #include "Intersection.h"
 #include "Scene.h"
 
-int main() {
-    constexpr int NX = 512;
-    constexpr int NY = 512;
+constexpr int NX = 512;
+constexpr int NY = 512;
 
+Color* buffer;
+
+void gl_display() {
+    glClearColor(0,0,0,1);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    constexpr int N = 3*NX*NY;
+
+    float* float_buffer = new float[N];
+
+    int k = 0;
+    for (int i = 0; i < NX; i++) {
+        for (int j = 0; j < NY; j++) {
+            float_buffer[k++] = buffer[j*NY + i].r;
+            float_buffer[k++] = buffer[j*NY + i].g;
+            float_buffer[k++] = buffer[j*NY + i].b;
+        }
+    }
+
+    glDrawPixels(NX, NY, GL_RGB, GL_FLOAT, float_buffer);
+
+    glutSwapBuffers();
+
+    delete[] float_buffer;
+}
+
+int main(int argc, char* argv[]) {
     constexpr float l = -0.1f;
     constexpr float r =  0.1f;
     constexpr float b = -0.1f;
@@ -41,7 +69,7 @@ int main() {
     Scene scene(surfaces, light);
 
     // Fill pixel buffer
-    Color* buffer = new Color[NX*NY];
+    buffer = new Color[NX*NY];
     for (int i = 0; i < NX; i++) {
         for (int j = 0; j < NY; j++) {
             float u = l + ((r-l)*(i+0.5f)/NX);
@@ -54,27 +82,36 @@ int main() {
 
             Intersection* hit = scene.intersect(ray);
             if (hit) 
-                //buffer[i][j] = Color(1.0, 1.0, 1.0);
                 buffer[i*NY + j] = Color(1.0, 1.0, 1.0);
             delete hit;
         }
     }
 
-    // Write buffer to image file
-    FILE* fp = fopen("images/part1.ppm", "w");
-    fprintf(fp, "P3\n");
-    fprintf(fp, "%d %d %d\n", NX, NY, 255);
-    for (int i = NX-1; i >= 0; i--) {
-        for (int j = 0; j < NY; j++) {
-            // Convert float RGB to int RGB
-            int ir = (int)(buffer[j*NY + i].r * 255);
-            int ig = (int)(buffer[j*NY + i].g * 255);
-            int ib = (int)(buffer[j*NY + i].b * 255);
+    #if defined(USE_OPENGL)
+        // Write buffer to OpenGL window
+        glutInit(&argc, argv);
+        glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+        glutInitWindowSize(NX, NY);
+        glutCreateWindow("Part 1");
+        glutDisplayFunc(gl_display);
+        glutMainLoop();
+    #else
+        // Write buffer to image file
+        FILE* fp = fopen("images/part1.ppm", "w");
+        fprintf(fp, "P3\n");
+        fprintf(fp, "%d %d %d\n", NX, NY, 255);
+        for (int i = NX-1; i >= 0; i--) {
+            for (int j = 0; j < NY; j++) {
+                // Convert float RGB to int RGB
+                int ir = (int)(buffer[j*NY + i].r * 255);
+                int ig = (int)(buffer[j*NY + i].g * 255);
+                int ib = (int)(buffer[j*NY + i].b * 255);
 
-            fprintf(fp, "%d %d %d\n", ir, ig, ib);
+                fprintf(fp, "%d %d %d\n", ir, ig, ib);
+            }
         }
-    }
-    fclose(fp);
+        fclose(fp);
+    #endif
 
     delete[] buffer;
 

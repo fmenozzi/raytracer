@@ -6,7 +6,11 @@ CC_RELEASE = @$(CC) -O3
 SRC = src/*.cpp
 INC = -Iinclude
 
+GL_LFLAGS = -lGL -lGLU -lglut
+
 all: part1 part2 part3
+
+gl: part1-gl part2-gl part3-gl
 
 part1:
 	@echo "Part 1"
@@ -28,6 +32,30 @@ part3:
 	@echo "Part 3"
 	@echo "Building..."
 	@$(CC_RELEASE) -fopenmp $(INC) part3.cpp $(SRC) -o part3
+	@echo "Rendering..."
+	@./part3
+	@echo "Done"
+
+part1-gl:
+	@echo "Part 1 using OpenGL"
+	@echo "Building..."
+	@$(CC_RELEASE) $(INC) part1.cpp $(SRC) -o part1 $(GL_LFLAGS) -DUSE_OPENGL
+	@echo "Rendering..."
+	@./part1 &
+	@echo "Done"
+
+part2-gl:
+	@echo "Part 2 using OpenGL"
+	@echo "Building..."
+	@$(CC_RELEASE) $(INC) part2.cpp $(SRC) -o part2 $(GL_LFLAGS) -DUSE_OPENGL
+	@echo "Rendering..."
+	@./part2 &
+	@echo "Done"
+
+part3-gl:
+	@echo "Part 3 using OpenGL"
+	@echo "Building..."
+	@$(CC_RELEASE) -fopenmp $(INC) part3.cpp $(SRC) -o part3 $(GL_LFLAGS) -DUSE_OPENGL
 	@echo "Rendering..."
 	@./part3
 	@echo "Done"
