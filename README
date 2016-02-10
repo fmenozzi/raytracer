@@ -1,0 +1,28 @@
+COMP 770 - PA1
+==============
+
+This assignment has three parts, as described in pa1.pdf:
+    * Intersections
+    * Intersections + shading
+    * Intersections + shading + antialiasing
+
+The provided Makefile can be used to build individual parts (e.g. make part1) or
+build all three parts together (make). In either case, the result will be a
+binary in the "bin" directory and a .ppm image of the result in the "images"
+directory.
+
+Because I chose not to use OpenGL for this assignment, there are no external
+dependencies for this project other than a C++11 compiler and the standard
+library. I use OpenMP to shave a few seconds off the running time of Part 3, but
+every somewhat-modern C++ compiler will have that capability built in. Running
+all three parts shouldn't take more than a few seconds.
+
+For Part 3, I used uniform sampling instead of random sampling to generate the
+64 sample rays within each pixel--the results looked identical, and the uniform
+sampling had better performance.
+
+NOTE: I chose .ppm as my image format because it's the easiest format to write 
+      to. However, it's possible that the default image viewer in Windows can't 
+      open files of that type. I've included .png versions in the "images"
+      directory just in case, but keep in mind that the code will still only
+      produce .ppm files.
