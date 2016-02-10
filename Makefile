@@ -6,7 +6,7 @@ CC_RELEASE = @$(CC) -O3
 SRC = src/*.cpp
 INC = -Iinclude
 
-all: part1 part2
+all: part1 part2 part3
 
 part1:
 	@echo "Part 1"
