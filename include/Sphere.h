@@ -5,8 +5,8 @@
 #include "Vector3.h"
 #include "Material.h"
 
-class Intersection;
-class Ray;
+struct Intersection;
+struct Ray;
 
 struct Sphere : public Surface {
     Vector3 center;

@@ -3,7 +3,7 @@
 
 #include "Vector3.h"
 
-class Surface;
+struct Surface;
 
 struct Intersection {
     Surface* hit;

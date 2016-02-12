@@ -4,9 +4,9 @@
 #include "Light.h"
 #include "Color.h"
 
-class Intersection;
-class Ray;
-class SurfaceList;
+struct Intersection;
+struct Ray;
+struct SurfaceList;
 
 struct Scene {
     SurfaceList& surfaces;

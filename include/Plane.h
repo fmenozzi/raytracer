@@ -5,8 +5,8 @@
 #include "Vector3.h"
 #include "Material.h"
 
-class Intersection;
-class Ray;
+struct Intersection;
+struct Ray;
 
 struct Plane : public Surface {
     float a, b, c, d;

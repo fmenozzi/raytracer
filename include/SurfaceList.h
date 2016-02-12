@@ -5,8 +5,8 @@
 
 #include "Surface.h"
 
-class Intersection;
-class Ray;
+struct Intersection;
+struct Ray;
 
 struct SurfaceList {
     std::vector<Surface*> surfaces;

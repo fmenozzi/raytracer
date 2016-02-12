@@ -4,11 +4,11 @@
 #include "Material.h"
 #include "Color.h"
 
-class Vector3;
-class Intersection;
-class Ray;
-class Light;
-class SurfaceList;
+struct Vector3;
+struct Intersection;
+struct Ray;
+struct Light;
+struct SurfaceList;
 
 struct Surface {
     Material mat;

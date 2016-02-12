@@ -55,7 +55,8 @@ int main(int argc, char* argv[]) {
     constexpr float dist = 0.1f;
 
     constexpr int SAMPLES   = 64;
-    constexpr int SAMPLEDIM = sqrt(SAMPLES);
+
+    const int SAMPLEDIM = sqrt(SAMPLES);
 
     // Materials
     Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
