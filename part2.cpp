@@ -52,10 +52,10 @@ int main(int argc, char* argv[]) {
     constexpr float dist = 0.1f;
 
     // Materials
-    Material mp(Color(0.2, 0.2, 0.2), Color(1.0, 1.0, 1.0), Color(0.0, 0.0, 0.0),  0.0);
-    Material m1(Color(0.2, 0.0, 0.0), Color(1.0, 0.0, 0.0), Color(0.0, 0.0, 0.0),  0.0);
-    Material m2(Color(0.0, 0.2, 0.0), Color(0.0, 0.5, 0.0), Color(0.5, 0.5, 0.5), 32.0);
-    Material m3(Color(0.0, 0.0, 0.2), Color(0.0, 0.0, 1.0), Color(0.0, 0.0, 0.0),  0.0);
+    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
+    Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
+    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f);
+    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
 
     // Surfaces
     SurfaceList surfaces;
@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
 
             Intersection* hit = scene.intersect(ray);
             if (hit)
-                buffer[i*NY + j] = scene.shade(ray, hit).correct(2.2);
+                buffer[i*NY + j] = scene.shade(ray, hit).correct(2.2f);
             delete hit;
         }
     }

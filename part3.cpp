@@ -58,11 +58,10 @@ int main(int argc, char* argv[]) {
     constexpr int SAMPLEDIM = sqrt(SAMPLES);
 
     // Materials
-    Material mp(Color(0.2, 0.2, 0.2), Color(1.0, 1.0, 1.0), Color(0.0, 0.0, 0.0),  0.0);
-    Material m1(Color(0.2, 0.0, 0.0), Color(1.0, 0.0, 0.0), Color(0.0, 0.0, 0.0),  0.0);
-    Material m2(Color(0.0, 0.2, 0.0), Color(0.0, 0.5, 0.0), Color(0.5, 0.5, 0.5), 32.0);
-    Material m3(Color(0.0, 0.0, 0.2), Color(0.0, 0.0, 1.0), Color(0.0, 0.0, 0.0),  0.0);
-
+    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
+    Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
+    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f);
+    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
     // Surfaces
     SurfaceList surfaces;
     surfaces.add(new Plane(0, 1, 0, 2, mp));
@@ -86,8 +85,8 @@ int main(int argc, char* argv[]) {
         for (int si = 0; si < SAMPLEDIM; si++) {
             for (int sj = 0; sj < SAMPLEDIM; sj++) {
                 // Uniform sampling
-                float x = (i-0.5) + (si)/(float)SAMPLEDIM;
-                float y = (j-0.5) + (sj)/(float)SAMPLEDIM;
+                float x = (i-0.5f) + (si)/(float)SAMPLEDIM;
+                float y = (j-0.5f) + (sj)/(float)SAMPLEDIM;
                 
                 float u = l + ((r-l)*(x+0.5f)/NX);
                 float v = b + ((t-b)*(y+0.5f)/NY);
@@ -99,7 +98,7 @@ int main(int argc, char* argv[]) {
 
                 Intersection* hit = scene.intersect(ray);
                 if (hit)
-                    res += scene.shade(ray, hit).correct(2.2);
+                    res += scene.shade(ray, hit).correct(2.2f);
                 delete hit;
             }
         }
