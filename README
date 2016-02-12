@@ -20,7 +20,9 @@ once ("make gl")
 
 If you don't have OpenGL and GLUT installed, you can still render the images
 as .ppm files written to disk, either individually (e.g. "make part1") or all at
-once ("make"). 
+once ("make").
+
+Once you finish, "make clean" will remove all the executables.
 
 If you go the non-GL route, there are no external dependencies for this project
 other than a C++11 compiler and the standard library. I use OpenMP to shave a
