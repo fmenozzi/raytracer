@@ -1,5 +1,6 @@
 #include "Color.h"
-#include <algorithm>
+
+#include <cmath>
 
 Color Color::correct(float gamma) const {
     float exp = 1/gamma;
