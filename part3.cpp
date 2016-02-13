@@ -5,7 +5,9 @@
     #include <GL/glut.h>
 #endif
 
-#include "omp.h"
+#if defined(USE_OPENMP)
+    #include "omp.h"
+#endif
 
 #include "Vector3.h"
 #include "Color.h"
@@ -79,7 +81,9 @@ int main(int argc, char* argv[]) {
 
     // Fill pixel buffer
     buffer = new Color[NX*NY];
-    #pragma omp parallel for
+    #if defined(USE_OPENMP)
+        #pragma omp parallel for
+    #endif
     for (int k = 0; k < NX*NY; k++) {
         int i = k % NX;
         int j = k / NX;

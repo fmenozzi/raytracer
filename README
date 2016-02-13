@@ -7,8 +7,8 @@ This assignment has three parts, as described in pa1.pdf:
     * Intersections + shading + antialiasing
 
 I have provided a Makefile which can be used to build and render images either
-individually or all at once. Note that I have only tested this code on Linux
-using Ubuntu 14.04.
+individually or all at once. Note that I have only tested this code with g++ 4.8
+on Ubuntu 14.04.
 
 There are two ways to render the images:
     1. Using OpenGL and GLUT
@@ -20,14 +20,15 @@ once ("make gl")
 
 If you don't have OpenGL and GLUT installed, you can still render the images
 as .ppm files written to disk, either individually (e.g. "make part1") or all at
-once ("make").
+once ("make"). Images rendered this way will show up in the "images" directory.
 
 Once you finish, "make clean" will remove all the executables.
 
 If you go the non-GL route, there are no external dependencies for this project
 other than a C++11 compiler and the standard library. I use OpenMP to shave a
-few seconds off the running time of Part 3, but every somewhat-modern C++
-compiler will have that capability built-in. Running all three parts shouldn't
+few seconds off the running time of Part 3, but you can choose not to run with
+OpenMP if you wish ("make no-omp", "make gl-no-omp", "make part3-no-omp", and
+"make part3-gl-no-omp"). Even without OpenMP, running all the code shouldn't
 take more than a few seconds.
 
 For Part 3, I used uniform sampling instead of random sampling to generate the
@@ -36,6 +37,6 @@ sampling had better performance.
 
 NOTE: I chose .ppm as my image format because it's the easiest format to write 
       to. However, it's possible that the default image viewer in Windows can't 
-      open files of that type. I've included .png versions in the "images"
+      open files of that type. I've included .png versions in the "images/pngs"
       directory just in case, but keep in mind that the code will still only
       produce .ppm files.
