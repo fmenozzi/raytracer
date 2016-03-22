@@ -81,4 +81,4 @@ part3-gl-no-omp:
 	@echo "Done"
 
 clean:
-	@rm part1 part2 part3
+	@rm -f part1 part2 part3
