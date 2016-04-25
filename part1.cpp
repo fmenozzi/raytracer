@@ -61,10 +61,10 @@ int main(int argc, char* argv[]) {
     constexpr float dist = 0.1f;
 
     // Materials
-    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.5f);
-    Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
-    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f, 0.0f);
-    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.8f);
+    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
+    Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
+    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f);
+    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
 
     // Surfaces
     SurfaceList surfaces;
@@ -74,9 +74,9 @@ int main(int argc, char* argv[]) {
     surfaces.add(std::move(std::unique_ptr<Sphere>(new Sphere(Eigen::Vector3f( 4, 0, -7), 1, m3))));
 
     // Light
-    Light light(Eigen::Vector3f(-4, 4, -3), 1);
+    Light light(Vector3(-4, 4, -3), 1);
 
-    // Add surfaces and light to scene
+    // Add group to scene
     Scene scene(surfaces, light);
 
     // Fill pixel buffer
@@ -86,10 +86,10 @@ int main(int argc, char* argv[]) {
             float u = l + ((r-l)*(i+0.5f)/NX);
             float v = b + ((t-b)*(j+0.5f)/NY);
 
-            Eigen::Vector3f p(0,0,0);
-            Eigen::Vector3f d(u, v, -dist);
+            auto p = Eigen::Vector3f(0, 0, 0);
+            auto d = Eigen::Vector3f(u, v, -dist);
 
-            Ray ray(p, d);
+            auto ray = Ray(p, d);
 
             auto hit = std::unique_ptr<Intersection>(scene.intersect(ray));
             if (hit)
@@ -104,7 +104,6 @@ int main(int argc, char* argv[]) {
         glutInitWindowSize(NX, NY);
         glutCreateWindow("Part 1");
         glutDisplayFunc(gl_display);
-        glutKeyboardFunc(gl_keyboard);
         glutMainLoop();
     #else
         // Write buffer to image file
