@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
 
             auto hit = std::unique_ptr<Intersection>(scene.intersect(ray));
             if (hit)
-                buffer[i*NY + j] = scene.shade(ray, *hit, 2, true, false).correct(2.2f);
+                buffer[i*NY + j] = Color(1,1,1);
         }
     }
 

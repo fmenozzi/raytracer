@@ -120,13 +120,13 @@ int main(int argc, char* argv[]) {
         glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
         glutInitWindowSize(NX, NY);
-        glutCreateWindow(shadows ? "Part 2 (with shadows)" : "Part 2 (without shadows)");
+        glutCreateWindow(shadows ? "Part 5 (with shadows)" : "Part 5 (without shadows)");
         glutDisplayFunc(gl_display);
         glutKeyboardFunc(gl_keyboard);
         glutMainLoop();
     #else
         // Write buffer to image file
-        const char* path = shadows ? "images/part2b.ppm" : "images/part2a.ppm";
+        const char* path = shadows ? "images/part5b.ppm" : "images/part5a.ppm";
         FILE* fp = fopen(path, "w");
         fprintf(fp, "P3\n");
         fprintf(fp, "%d %d %d\n", NX, NY, 255);
