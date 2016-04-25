@@ -61,10 +61,10 @@ int main(int argc, char* argv[]) {
     constexpr float dist = 0.1f;
 
     // Materials
-    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
-    Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
-    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f);
-    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
+    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
+    Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
+    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f, 0.0f);
+    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
 
     // Surfaces
     SurfaceList surfaces;
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
     surfaces.add(std::move(std::unique_ptr<Sphere>(new Sphere(Eigen::Vector3f( 4, 0, -7), 1, m3))));
 
     // Light
-    Light light(Vector3(-4, 4, -3), 1);
+    Light light(Eigen::Vector3f(-4, 4, -3), 1);
 
     // Add group to scene
     Scene scene(surfaces, light);
@@ -104,6 +104,7 @@ int main(int argc, char* argv[]) {
         glutInitWindowSize(NX, NY);
         glutCreateWindow("Part 1");
         glutDisplayFunc(gl_display);
+        glutKeyboardFunc(gl_keyboard);
         glutMainLoop();
     #else
         // Write buffer to image file

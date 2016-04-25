@@ -4,7 +4,6 @@
     #include <GL/glut.h>
 #endif
 
-#include "Vector3.h"
 #include "Color.h"
 #include "Ray.h"
 #include "Surface.h"
@@ -13,6 +12,8 @@
 #include "Plane.h"
 #include "Intersection.h"
 #include "Scene.h"
+
+#include <Eigen/Dense>
 
 constexpr int NX = 512;
 constexpr int NY = 512;
@@ -41,6 +42,14 @@ Color* buffer;
 
         delete[] float_buffer;
     }
+
+    void gl_keyboard(unsigned char key, int x, int y) {
+        switch (key) {
+            // ESC
+            case 27:
+                exit(EXIT_SUCCESS);
+        }
+    }
 #endif
 
 int main(int argc, char* argv[]) {
@@ -52,20 +61,20 @@ int main(int argc, char* argv[]) {
     constexpr float dist = 0.1f;
 
     // Materials
-    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
-    Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
-    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f);
-    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f);
+    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
+    Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
+    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f, 0.0f);
+    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
 
     // Surfaces
     SurfaceList surfaces;
-    surfaces.add(new Plane(0, 1, 0, 2, mp));
-    surfaces.add(new Sphere(Vector3(-4, 0, -7), 1, m1));
-    surfaces.add(new Sphere(Vector3( 0, 0, -7), 2, m2));
-    surfaces.add(new Sphere(Vector3( 4, 0, -7), 1, m3));
+    surfaces.add(std::move(std::unique_ptr<Plane>(new Plane(Eigen::Vector3f(0, -2, 0), Eigen::Vector3f(0, 1, 0), mp))));
+    surfaces.add(std::move(std::unique_ptr<Sphere>(new Sphere(Eigen::Vector3f(-4, 0, -7), 1, m1))));
+    surfaces.add(std::move(std::unique_ptr<Sphere>(new Sphere(Eigen::Vector3f( 0, 0, -7), 2, m2))));
+    surfaces.add(std::move(std::unique_ptr<Sphere>(new Sphere(Eigen::Vector3f( 4, 0, -7), 1, m3))));
 
     // Light
-    Light light(Vector3(-4, 4, -3), 1);
+    Light light(Eigen::Vector3f(-4, 4, -3), 1);
 
     // Add surfaces and light to scene
     Scene scene(surfaces, light);
@@ -77,15 +86,14 @@ int main(int argc, char* argv[]) {
             float u = l + ((r-l)*(i+0.5f)/NX);
             float v = b + ((t-b)*(j+0.5f)/NY);
 
-            Vector3 p(0,0,0);
-            Vector3 d(u, v, -dist);
+            auto p = Eigen::Vector3f(0, 0, 0);
+            auto d = Eigen::Vector3f(u, v, -dist);
 
-            Ray ray(p, d);
+            auto ray = Ray(p, d);
 
-            Intersection* hit = scene.intersect(ray);
+            auto hit = std::unique_ptr<Intersection>(scene.intersect(ray));
             if (hit)
-                buffer[i*NY + j] = scene.shade(ray, hit).correct(2.2f);
-            delete hit;
+                buffer[i*NY + j] = scene.shade(ray, *hit, 2, true, false).correct(2.2f);
         }
     }
 
@@ -96,10 +104,12 @@ int main(int argc, char* argv[]) {
         glutInitWindowSize(NX, NY);
         glutCreateWindow("Part 2");
         glutDisplayFunc(gl_display);
+        glutKeyboardFunc(gl_keyboard);
         glutMainLoop();
     #else
         // Write buffer to image file
-        FILE* fp = fopen("images/part2.ppm", "w");
+        const char* path = "images/part2.ppm";
+        FILE* fp = fopen(path, "w");
         fprintf(fp, "P3\n");
         fprintf(fp, "%d %d %d\n", NX, NY, 255);
         for (int i = NX-1; i >= 0; i--) {
@@ -113,6 +123,7 @@ int main(int argc, char* argv[]) {
             }
         }
         fclose(fp);
+        printf("Image written to %s\n", path);
     #endif
 
     delete[] buffer;

@@ -102,13 +102,13 @@ int main(int argc, char* argv[]) {
         glutInit(&argc, argv);
         glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
         glutInitWindowSize(NX, NY);
-        glutCreateWindow("Part 1");
+        glutCreateWindow("Part 4");
         glutDisplayFunc(gl_display);
         glutKeyboardFunc(gl_keyboard);
         glutMainLoop();
     #else
         // Write buffer to image file
-        const char* path = "images/part1.ppm";
+        const char* path = "images/part4.ppm";
         FILE* fp = fopen(path, "w");
         fprintf(fp, "P3\n");
         fprintf(fp, "%d %d %d\n", NX, NY, 255);
