@@ -46,12 +46,12 @@ build-part3-ppm-no-omp:
 	@$(CC_RELEASE) $(INC) part3.cpp $(SRC) -o part3
 	@echo "Done"
 build-part3-gl:
-	@echo "Building Part 3 using OpenGL..."
+	@echo "Building Part 3 with OpenGL..."
 	@$(CC_RELEASE) -fopenmp $(INC) part3.cpp $(SRC) -o part3 $(GL_LFLAGS) -DUSE_OPENGL
 	@echo "Done"
 build-part3-gl-no-omp:
-	@echo "Building Part 3 using OpenGL, OpenMP..."
-	@$(CC_RELEASE) $(INC) part3.cpp $(SRC) -o part3
+	@echo "Building Part 3 with OpenGL, OpenMP..."
+	@$(CC_RELEASE) $(INC) part3.cpp $(SRC) -o part3 $(GL_LFLAGS) -DUSE_OPENGL
 	@echo "Done"
 build-part4-ppm:
 	@echo "Building Part 4..."
@@ -62,11 +62,11 @@ build-part4-ppm-no-omp:
 	@$(CC_RELEASE) $(INC) part4.cpp $(SRC) -o part4
 	@echo "Done"
 build-part4-gl:
-	@echo "Building Part 4 using OpenGL..."
+	@echo "Building Part 4 with OpenGL..."
 	@$(CC_RELEASE) -fopenmp $(INC) part4.cpp $(SRC) -o part4 $(GL_LFLAGS) -DUSE_OPENGL
 	@echo "Done"
 build-part4-gl-no-omp:
-	@echo "Building Part 4 using OpenGL, OpenMP..."
+	@echo "Building Part 4 with OpenGL, OpenMP..."
 	@$(CC_RELEASE) $(INC) part4.cpp $(SRC) -o part4
 	@echo "Done"
 build-part5-ppm:
