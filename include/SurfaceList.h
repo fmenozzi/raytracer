@@ -2,23 +2,19 @@
 #define SURFACELIST_H_
 
 #include <vector>
+#include <memory>
 
 #include "Surface.h"
 
-struct Intersection;
 struct Ray;
 
 struct SurfaceList {
-    std::vector<Surface*> surfaces;
+    std::vector<std::unique_ptr<Surface>> surfaces;
 
-    virtual ~SurfaceList() {
-        for (auto surface : surfaces)
-            delete surface;
-    }
-
-    void add(Surface* surface);
+    void add(std::unique_ptr<Surface> surface);
+    void add(SurfaceList& other);
     
-    Intersection* intersect(const Ray& ray) const;
+    std::unique_ptr<Intersection> intersect(const Ray& ray) const;
 };
 
 #endif

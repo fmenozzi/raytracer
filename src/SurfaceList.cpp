@@ -1,21 +1,35 @@
 #include "SurfaceList.h"
 #include "Intersection.h"
 
-void SurfaceList::add(Surface* surface) {
-    surfaces.push_back(surface);
+#include <algorithm>
+#include <iterator>
+#include <cfloat>
+
+void SurfaceList::add(std::unique_ptr<Surface> surface) {
+    surfaces.push_back(std::move(surface));
 }
 
-// TODO: Image renders incorrectly when I take first hit
-//       instead of last
-Intersection* SurfaceList::intersect(const Ray& ray) const {
-    Intersection* result = nullptr;
+void SurfaceList::add(SurfaceList& other) {
+    surfaces.reserve(surfaces.size() + other.surfaces.size());
+
+    std::move(other.surfaces.begin(),
+              other.surfaces.end(),
+              std::back_inserter(surfaces));
+}
+
+std::unique_ptr<Intersection> SurfaceList::intersect(const Ray& ray) const {
+    std::unique_ptr<Intersection> result = nullptr;
+
+    float t = FLT_MAX;
     for (const auto& surface : surfaces) {
-        Intersection* hit = surface->intersect(ray);
+        auto hit = surface->intersect(ray);
         if (hit) {
-            if (result)
-                delete result;
-            result = hit;
+            if (hit->t > 0 && hit->t < t) {
+                result = std::move(hit);
+                t = result->t;
+            }
         }
     }
+
     return result;
 }

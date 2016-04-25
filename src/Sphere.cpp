@@ -1,13 +1,14 @@
 #include "Sphere.h"
 #include "Ray.h"
-#include "Vector3.h"
 #include "Intersection.h"
 
 #include <cmath>
 
-Intersection* Sphere::intersect(const Ray& ray) {
-    Vector3 p = ray.p - center;
-    Vector3 d = ray.d;
+#include <Eigen/Dense>
+
+std::unique_ptr<Intersection> Sphere::intersect(const Ray& ray) {
+    auto p = ray.p - center;
+    auto d = ray.d;
 
     float dp = d.dot(p);
     float dd = d.dot(d);
@@ -30,8 +31,8 @@ Intersection* Sphere::intersect(const Ray& ray) {
         float t = t0 < 0 ? t1 : t0;
 
         // Calculate surface normal
-        Vector3 n = (ray.evaluate(t) - center).norm();
+        auto n = (ray.evaluate(t) - center).normalized();
 
-        return new Intersection(this, n, t);
+        return std::unique_ptr<Intersection>(new Intersection(this, n, t));
     }
 }

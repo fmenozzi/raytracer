@@ -2,25 +2,25 @@
 #define PLANE_H_
 
 #include "Surface.h"
-#include "Vector3.h"
 #include "Material.h"
+#include "Intersection.h"
 
-struct Intersection;
+#include <memory>
+
+#include <Eigen/Dense>
+
 struct Ray;
 
 struct Plane : public Surface {
-    float a, b, c, d;
-    Vector3 n;
+    Eigen::Vector3f p;
+    Eigen::Vector3f n;
 
-    Plane(float _a, float _b, float _c, float _d, Material _mat) : 
+    Plane(const Eigen::Vector3f& _p, const Eigen::Vector3f& _n, const Material& _mat) :
         Surface(_mat),
-        a(_a), 
-        b(_b), 
-        c(_c), 
-        d(_d), 
-        n(Vector3(_a, _b, _c).norm()) {}
+        p(_p),
+        n(_n) {}
 
-    Intersection* intersect(const Ray& ray) override;
+    std::unique_ptr<Intersection> intersect(const Ray& ray) override;
 };
 
 #endif

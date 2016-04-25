@@ -1,16 +1,16 @@
 #ifndef INTERSECTION_H_
 #define INTERSECTION_H_
 
-#include "Vector3.h"
+#include <Eigen/Dense>
 
 struct Surface;
 
 struct Intersection {
     Surface* hit;
-    Vector3 normal;
+    Eigen::Vector3f normal;
     float t;
 
-    Intersection(Surface* _hit, const Vector3& _normal, float _t) :
+    Intersection(Surface* _hit, const Eigen::Vector3f& _normal, float _t) :
         hit(_hit),
         normal(_normal),
         t(_t) {}

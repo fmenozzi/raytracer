@@ -2,22 +2,25 @@
 #define SPHERE_H_
 
 #include "Surface.h"
-#include "Vector3.h"
 #include "Material.h"
+#include "Intersection.h"
 
-struct Intersection;
+#include <memory>
+
+#include <Eigen/Dense>
+
 struct Ray;
 
 struct Sphere : public Surface {
-    Vector3 center;
+    Eigen::Vector3f center;
     float radius;
 
-    Sphere(const Vector3& _center, float _radius, Material _mat) : 
+    Sphere(const Eigen::Vector3f& _center, float _radius, const Material& _mat) :
         Surface(_mat),
         center(_center),
         radius(_radius) {}
 
-    Intersection* intersect(const Ray& ray) override;
+    std::unique_ptr<Intersection> intersect(const Ray& ray) override;
 };
 
 #endif

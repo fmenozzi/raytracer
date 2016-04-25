@@ -1,13 +1,13 @@
 #ifndef LIGHT_H_
 #define LIGHT_H_
 
-#include "Vector3.h"
+#include <Eigen/Dense>
 
 struct Light {
-    Vector3 pos;
+    Eigen::Vector3f pos;
     float intensity;
 
-    Light(const Vector3& _pos, float _intensity) :
+    Light(const Eigen::Vector3f& _pos, float _intensity) :
         pos(_pos),
         intensity(_intensity) {}
 };

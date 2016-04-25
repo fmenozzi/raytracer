@@ -1,10 +1,14 @@
-COMP 770 - PA1
-==============
+COMP 770 - PA1, PA4
+===================
 
-This assignment has three parts, as described in pa1.pdf:
+This repository is a combination of two separate assignments, which has five parts
+total, as described in pa1.pdf and pa4.pdf:
+
     * Intersections
     * Intersections + shading
     * Intersections + shading + antialiasing
+    * Intersections + shading + antialiasing + reflections
+    * kd-trees
 
 I have provided a Makefile which can be used to build and render images either
 individually or all at once. Note that I have only tested this code with g++ 4.8

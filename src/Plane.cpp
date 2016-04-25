@@ -2,20 +2,17 @@
 #include "Ray.h"
 #include "Intersection.h"
 
-#include <cmath>
+#include <Eigen/Dense>
 
-#include <cstdio>
-
-Intersection* Plane::intersect(const Ray& ray) {
-    Vector3 p = ray.p;
-    Vector3 d = ray.d;
+std::unique_ptr<Intersection> Plane::intersect(const Ray& ray) {
+    auto p = ray.p;
+    auto d = ray.d;
 
     if (n.dot(d) > 0.0f) {
         return nullptr;
     } else {
-        // TODO: Need general way of finding point on plane
-        Vector3 a(0,-2,0);
+        auto a = this->p;
         float t = (a-p).dot(n) / d.dot(n);
-        return new Intersection(this, n, t);
+        return std::unique_ptr<Intersection>(new Intersection(this, n, t));
     }
 }

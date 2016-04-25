@@ -3,10 +3,12 @@
 
 #include "Light.h"
 #include "Color.h"
+#include "Intersection.h"
 
-struct Intersection;
-struct Ray;
+#include <memory>
+
 struct SurfaceList;
+struct Ray;
 
 struct Scene {
     SurfaceList& surfaces;
@@ -16,8 +18,8 @@ struct Scene {
         surfaces(_surfaces),
         light(_light) {}
 
-    Intersection* intersect(const Ray& ray);
-    Color shade(const Ray& ray, Intersection* hit);
+    std::unique_ptr<Intersection> intersect(const Ray& ray) const;
+    Color shade(const Ray& ray, const Intersection& hit, int depth, bool shadows, bool kd) const;
 };
 
 #endif
