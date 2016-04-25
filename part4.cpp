@@ -70,10 +70,10 @@ int main(int argc, char* argv[]) {
     const int SAMPLEDIM = sqrt(SAMPLES);
 
     // Materials
-    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
+    Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.5f);
     Material m1(Color(0.2f, 0.0f, 0.0f), Color(1.0f, 0.0f, 0.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
-    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f, 0.8f);
-    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.5f);
+    Material m2(Color(0.0f, 0.2f, 0.0f), Color(0.0f, 0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f), 32.0f, 0.0f);
+    Material m3(Color(0.0f, 0.0f, 0.2f), Color(0.0f, 0.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.8f);
 
     // Surfaces
     SurfaceList surfaces;
@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
 
                 auto hit = std::unique_ptr<Intersection>(scene.intersect(ray));
                 if (hit)
-                    buffer[i*NY + j] = scene.shade(ray, *hit, 2, true, false).correct(2.2f);
+                    res += scene.shade(ray, *hit, 2, true, false).correct(2.2f);
             }
         }
         buffer[i*NY + j] = res / SAMPLES;
