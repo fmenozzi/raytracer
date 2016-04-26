@@ -12,13 +12,13 @@ std::unique_ptr<Intersection> Triangle::intersect(const Ray& ray) {
         return nullptr;
     } else {
         // Use centroid as point on plane
-        Eigen::Vector3f pt = 1/3.0f*a + 1/3.0f*b + 1/3.0f*c;
+        auto pt = 1/3.0f*a + 1/3.0f*b + 1/3.0f*c;
 
         // Find intersection t
         float t = (pt-p).dot(n) / d.dot(n);
 
         // Find intersection point
-        Eigen::Vector3f x = p + t*d;
+        auto x = p + d*t;
 
         // Perform intersection tests on half planes
         bool hp0 = (b-a).cross(x-a).dot(n) >= 0;

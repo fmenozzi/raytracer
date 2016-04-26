@@ -122,9 +122,11 @@ SurfaceList kd_intersect(const Ray& ray, const std::vector<KdNode>& kd_tree, int
 
             auto n = ((b-a).cross(c-a)).normalized();
 
-            auto triangle = std::unique_ptr<Triangle>(new Triangle(a,b,c,n,mt));
+            auto triangle1 = std::unique_ptr<Triangle>(new Triangle(a,b,c,n,mt));
+            auto triangle2 = std::unique_ptr<Triangle>(new Triangle(c,b,a,-n,mt));
 
-            leaves.add(std::move(triangle));
+            leaves.add(std::move(triangle1));
+            leaves.add(std::move(triangle2));
         }
         return leaves;
     } else {
