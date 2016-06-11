@@ -20,42 +20,50 @@
 
 #include <Eigen/Dense>
 
+#include <easyppm.h>
+
 constexpr int NX = 512;
 constexpr int NY = 512;
 
 Color* buffer;
 
+PPM ppm;
+
 #if defined(USE_OPENGL)
-    void gl_display() {
-        glClearColor(0,0,0,1);
-        glClear(GL_COLOR_BUFFER_BIT);
+void gl_display() {
+    glClearColor(0,0,0,1);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-        float* float_buffer = new float[3*NX*NY];
+    float* float_buffer = new float[3*NX*NY];
 
-        int k = 0;
-        for (int i = 0; i < NX; i++) {
-            for (int j = 0; j < NY; j++) {
-                float_buffer[k++] = buffer[j*NY + i].r;
-                float_buffer[k++] = buffer[j*NY + i].g;
-                float_buffer[k++] = buffer[j*NY + i].b;
-            }
-        }
-
-        glDrawPixels(NX, NY, GL_RGB, GL_FLOAT, float_buffer);
-
-        glutSwapBuffers();
-
-        delete[] float_buffer;
-    }
-
-    void gl_keyboard(unsigned char key, int x, int y) {
-        switch (key) {
-            // ESC
-            case 27:
-                exit(EXIT_SUCCESS);
+    int k = 0;
+    for (int i = 0; i < NX; i++) {
+        for (int j = 0; j < NY; j++) {
+            float_buffer[k++] = buffer[j*NY + i].r;
+            float_buffer[k++] = buffer[j*NY + i].g;
+            float_buffer[k++] = buffer[j*NY + i].b;
         }
     }
+
+    glDrawPixels(NX, NY, GL_RGB, GL_FLOAT, float_buffer);
+
+    glutSwapBuffers();
+
+    delete[] float_buffer;
+}
+
+void gl_keyboard(unsigned char key, int x, int y) {
+    switch (key) {
+        // ESC
+        case 27:
+            exit(EXIT_SUCCESS);
+    }
+}
 #endif
+
+int clamp(int x, int min, int max) {
+    return std::max(min, std::min(x, max));
+}
 
 int main(int argc, char* argv[]) {
     constexpr float l = -0.1f;
@@ -68,6 +76,10 @@ int main(int argc, char* argv[]) {
     constexpr int SAMPLES   = 64;
 
     const int SAMPLEDIM = sqrt(SAMPLES);
+
+#ifndef USE_OPENGL
+    ppm = easyppm_create(NX, NY, IMAGETYPE_PPM);
+#endif
 
     // Materials
     Material mp(Color(0.2f, 0.2f, 0.2f), Color(1.0f, 1.0f, 1.0f), Color(0.0f, 0.0f, 0.0f),  0.0f, 0.0f);
@@ -116,7 +128,15 @@ int main(int argc, char* argv[]) {
                     res += scene.shade(ray, *hit, 2, true, false).correct(2.2f);
             }
         }
-        buffer[i*NY + j] = res / SAMPLES;
+        #if defined(USE_OPENGL)
+            buffer[i*NY + j] = res / SAMPLES;
+        #else
+            auto color = res / SAMPLES;
+            auto r = clamp(color.r * 255, 0, 255);
+            auto g = clamp(color.g * 255, 0, 255);
+            auto b = clamp(color.b * 255, 0, 255);
+            easyppm_set(&ppm, i, j, easyppm_rgb(r, g, b));
+        #endif
     }
 
     #if defined(USE_OPENGL)
@@ -131,20 +151,11 @@ int main(int argc, char* argv[]) {
     #else
         // Write buffer to image file
         const char* path = "images/part3.ppm";
-        FILE* fp = fopen(path, "w");
-        fprintf(fp, "P3\n");
-        fprintf(fp, "%d %d %d\n", NX, NY, 255);
-        for (int i = NX-1; i >= 0; i--) {
-            for (int j = 0; j < NY; j++) {
-                // Convert float RGB to int RGB
-                int ir = (int)(buffer[j*NY + i].r * 255);
-                int ig = (int)(buffer[j*NY + i].g * 255);
-                int ib = (int)(buffer[j*NY + i].b * 255);
 
-                fprintf(fp, "%d %d %d\n", ir, ig, ib);
-            }
-        }
-        fclose(fp);
+        easyppm_invert_y(&ppm);
+        easyppm_write(&ppm, path);
+        easyppm_destroy(&ppm);
+
         printf("Image written to %s\n", path);
     #endif
 
