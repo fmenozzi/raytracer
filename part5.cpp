@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
     int shadows = 0;
     
     argparser ap = argparser_create(argc, argv, PARSEMODE_LENIENT);
-    argparser_add(&ap, "-s", "--shadows", ARGTYPE_BOOL, &shadows, NULL);
+    argparser_add(&ap, "-s", "--shadows", ARGTYPE_BOOL, &shadows, "Use shadows in kd-tree");
     argparser_parse(&ap);
 
     constexpr float l = -0.1f;
